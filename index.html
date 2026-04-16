@@ -280,6 +280,42 @@
     </footer>
 
     <script>
+      // Cipta objek audio
+const welcomeAudio = new Audio('https://github.com/ttv4u15/ep/raw/main/SDKEPVM.mp3'); 
+let audioDahMain = false;
+
+function panggilSuara() {
+    if (audioDahMain) return; // Pastikan hanya main sekali sahaja
+
+    // Arahan untuk mainkan audio
+    welcomeAudio.play().then(() => {
+        // Berjaya autoplay (biasanya jika user pernah buka web ini sebelum ini)
+        audioDahMain = true;
+        buangListeners();
+    }).catch(error => {
+        // Gagal autoplay (disekat oleh browser)
+        console.log("Autoplay disekat. Menunggu interaksi pengguna...");
+    });
+}
+
+// Fungsi untuk buang semua 'pendengar' supaya tidak berulang
+function buangListeners() {
+    ['click', 'touchstart', 'mousedown', 'keydown', 'scroll'].forEach(evt => {
+        document.removeEventListener(evt, panggilSuara);
+    });
+}
+
+// 1. Cuba jalankan sebaik sahaja tetingkap siap loading
+window.addEventListener('load', () => {
+    // Beri sedikit delay (0.5 saat) supaya page nampak cantik dulu baru suara keluar
+    setTimeout(panggilSuara, 500);
+});
+
+// 2. Jika langkah 1 disekat browser, suara akan keluar secara automatik 
+// sebaik sahaja user buat apa-apa (klik, scroll, atau tekan butang)
+['click', 'touchstart', 'mousedown', 'keydown', 'scroll'].forEach(evt => {
+    document.addEventListener(evt, panggilSuara, { once: true });
+});
         function addRow() {
             const container = document.getElementById('dynamicContainer');
             const rowId = Date.now();
