@@ -280,42 +280,58 @@
     </footer>
 
     <script>
-      // Fungsi untuk suara ucapan selamat datang
-function playGreeting() {
-    // Semak jika browser menyokong SpeechSynthesis
-    if ('speechSynthesis' in window) {
-        const msg = new SpeechSynthesisUtterance();
-        msg.text = "Selamat Datang ke E-Penguatkuasa Veterinar Malaysia";
-        msg.lang = 'ms-MY'; // Set bahasa ke Bahasa Melayu
-        msg.rate = 0.9;      // Kelajuan suara (0.1 hingga 10)
-        msg.pitch = 1.1;     // Nada suara (lebih tinggi sedikit untuk suara perempuan)
+// Penanda supaya tidak bercakap lebih dari sekali
+let sudahBercakap = false;
 
-        // Cari suara perempuan dalam sistem
-        window.speechSynthesis.onvoiceschanged = () => {
+function mainkanSuaraSekali() {
+    // Jika sudah pernah bercakap, jangan buat apa-apa
+    if (sudahBercakap) return;
+
+    if ('speechSynthesis' in window) {
+        const ucapan = new SpeechSynthesisUtterance();
+        ucapan.text = "Selamat Datang ke E-Penguatkuasa Veterinar Malaysia";
+        ucapan.lang = 'ms-MY';
+        ucapan.rate = 0.85; // Kelajuan sebutan (jelas)
+        ucapan.pitch = 1.1;  // Nada suara perempuan
+
+        // Fungsi untuk mencari suara Malaysia tulen
+        const setSuaraMalaysia = () => {
             const voices = window.speechSynthesis.getVoices();
-            // Cuba cari suara Bahasa Melayu (ms-MY) atau Indonesia (id-ID) sebagai alternatif
-            const malayVoice = voices.find(voice => voice.lang === 'ms-MY' || voice.name.includes('Malaysian') || voice.lang === 'id-ID');
+            // Tapis: Mesti ms-MY dan TIADA perkataan 'indonesia'
+            const suaraMY = voices.find(v => 
+                (v.lang === 'ms-MY' || v.lang === 'ms_MY') && 
+                !v.name.toLowerCase().includes('indonesia')
+            );
             
-            if (malayVoice) {
-                msg.voice = malayVoice;
+            if (suaraMY) {
+                ucapan.voice = suaraMY;
             }
-            window.speechSynthesis.speak(msg);
+            
+            window.speechSynthesis.speak(ucapan);
+            sudahBercakap = true; // Tandakan sebagai sudah bercakap
         };
 
-        // Jalankan terus jika senarai suara sudah sedia
-        window.speechSynthesis.speak(msg);
+        // Tunggu senarai suara sedia (penting untuk Chrome/Android)
+        if (window.speechSynthesis.getVoices().length === 0) {
+            window.speechSynthesis.onvoiceschanged = setSuaraMalaysia;
+        } else {
+            setSuaraMalaysia();
+        }
     }
 }
 
-// Jalankan fungsi sebaik sahaja tetingkap dibuka
-window.addEventListener('load', playGreeting);
+// 1. Cuba jalankan automatik semasa web dibuka (Mungkin disekat browser)
+window.addEventListener('load', () => {
+    setTimeout(mainkanSuaraSekali, 500); // Tunggu 0.5 saat selepas load
+});
 
-// Nota: Browser moden kadang-kadang sekat suara automatik. 
-// Jika suara tidak keluar, ia akan dimulakan sebaik sahaja pengguna klik mana-mana bahagian di web.
-window.addEventListener('click', () => {
-    if (window.speechSynthesis.speaking) return; // Jangan ulang jika sedang bercakap
-    // playGreeting(); // Aktifkan ini jika mahu suara keluar selepas klik pertama
-}, { once: true });
+// 2. Jika disekat, suara akan keluar pada klik pertama sahaja di mana-mana bahagian skrin
+// Kita gunakan senarai event untuk PC (click) dan Phone (touchstart)
+['click', 'touchstart', 'mousedown'].forEach(evt => {
+    document.addEventListener(evt, () => {
+        mainkanSuaraSekali();
+    }, { once: true }); // '{ once: true }' memastikan event ini dibuang selepas sekali jalan
+});
         function addRow() {
             const container = document.getElementById('dynamicContainer');
             const rowId = Date.now();
