@@ -1,0 +1,361 @@
+<!-- 
+  Version: 2.7.0 (Realistic Corporate 3D Edition)
+  System: e-Penguat Kuasa Veterinar
+  Feature: Mesh Background, Glass UI, Pixar-style 3D Icons
+-->
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Penguat Kuasa Veterinar v2.7.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+
+        :root {
+            --primary: #1e40af;
+            --accent: #3b82f6;
+            --glass: rgba(255, 255, 255, 0.75);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            /* Realistic Mesh Corporate Background */
+            background-color: #e5e7eb;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(220,100%,90%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(210,100%,85%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(200,100%,90%,1) 0, transparent 50%),
+                url('https://upload.wikimedia.org/wikipedia/commons/2/26/Coat_of_arms_of_Malaysia.svg');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 40%;
+            overflow-x: hidden;
+        }
+
+        /* Float animation for 3D effect */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), inset 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .section-card:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .input-3d {
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .input-3d:focus {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+            outline: none;
+        }
+
+        .icon-3d {
+            filter: drop-shadow(4px 6px 4px rgba(0,0,0,0.2));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-submit {
+            background: linear-gradient(145deg, #1e40af, #3b82f6);
+            color: white;
+            padding: 22px;
+            border-radius: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-5px);
+            filter: brightness(1.1);
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.4);
+        }
+
+        .dynamic-row {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 5px solid var(--accent);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12">
+
+    <!-- Background Elements for Realism -->
+    <div class="fixed top-[-10%] left-[-5%] w-64 h-64 bg-blue-300 rounded-full blur-[100px] opacity-30"></div>
+    <div class="fixed bottom-[-10%] right-[-5%] w-96 h-96 bg-indigo-300 rounded-full blur-[100px] opacity-30"></div>
+
+    <div class="max-w-6xl mx-auto glass-panel p-8 md:p-14 animate__animated animate__zoomIn">
+        
+        <!-- HEADER LOGO SECTION -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8 border-b border-white pb-10">
+            <img src="https://github.com/ttv4u1/ep/raw/main/Jata%20KPKM.svg" class="h-28 icon-3d">
+            
+            <div class="text-center">
+                <h1 class="text-3xl md:text-5xl font-extrabold header-gradient tracking-tighter">e-PENGUAT KUASA VETERINAR</h1>
+                <p class="font-bold text-gray-700 text-xl mt-2">Bahagian Penguat Kuasa Veterinar (BPK)</p>
+                <p class="text-blue-500 font-semibold italic">Kementerian Pertanian dan Keterjaminan Makanan</p>
+                <div class="mt-4 inline-block px-6 py-1 bg-white shadow-sm border border-blue-100 text-blue-800 rounded-full text-xs font-black uppercase tracking-widest">Sistem Pintar Versi 2.7.0</div>
+            </div>
+
+            <div class="flex gap-4 items-center">
+                <img src="https://github.com/ttv4u1/KP/raw/main/DVS.svg" class="h-24 icon-3d">
+                <img src="https://github.com/ttv4u1/KP/raw/main/Logo%20Penguatkuasa.png" class="h-24 icon-3d">                
+            </div>
+        </div>
+
+        <form id="vetSystemForm" class="space-y-12">
+            
+            <!-- SECTION 1: ADMIN -->
+            <div class="section-card animate__animated animate__fadeInUp">
+                <h2 class="text-blue-900 font-black mb-6 flex items-center gap-3 text-lg uppercase">
+                    <i class="fas fa-id-card-alt text-2xl text-blue-600"></i> Maklumat Pentadbiran & Lokasi Kes
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Tahun Kejadian</label><input type="number" name="TAHUN" value="2024" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Bulan</label>
+                        <select name="BULAN" class="input-3d w-full mt-2">
+                            <option>JANUARI</option><option>FEBRUARI</option><option>MAC</option><option>APRIL</option><option>MEI</option><option>JUN</option><option>JULAI</option><option>OGOS</option><option>SEPTEMBER</option><option>OKTOBER</option><option>NOVEMBER</option><option>DISEMBER</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2"><label class="text-xs font-black text-gray-500 uppercase">Penguatkuasa (Negeri/Cawangan)</label>
+                        <select name="PENGUATKUASA" class="input-3d w-full mt-2">
+                            <optgroup label="WILAYAH PERSEKUTUAN">
+                                <option>WP KUALA LUMPUR</option><option>WP PUTRAJAYA</option><option>WP LABUAN</option>
+                            </optgroup>
+                            <optgroup label="NEGERI-NEGERI">
+                                <option>JOHOR</option><option>KEDAH</option><option>KELANTAN</option><option>MELAKA</option><option>NEGERI SEMBILAN</option><option>PAHANG</option><option>PERAK</option><option>PERLIS</option><option>PULAU PINANG</option><option>SABAH</option><option>SARAWAK</option><option>SELANGOR</option><option>TERENGGANU</option>
+                            </optgroup>
+                            <optgroup label="CAWANGAN KHAS">
+                                <option>Cawangan Taiping</option><option>Cawangan Muallim</option><option>Cawangan Sabak Bernam</option><option>Cawangan Segamat</option><option>Cawangan Raub</option><option>Cawangan Muadzam Shah</option><option>Cawangan Besut</option><option>Cawangan Gua Musang</option><option>Cawangan Machang</option><option>Cawangan Baling</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: BUTIRAN -->
+            <div class="section-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                <h2 class="text-blue-900 font-black mb-6 flex items-center gap-3 text-lg uppercase">
+                    <i class="fas fa-gavel text-2xl text-orange-500"></i> Butiran Repot & Undang-Undang
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Kategori Kes</label>
+                        <select name="KATEGORI_KES" class="input-3d w-full mt-2">
+                            <option>AKH</option><option>AMH</option><option>EMB</option><option>EPB</option><option>EPKL</option><option>EPU</option><option>Kawalan Pemindahan</option><option>Kawalan Penyembelihan</option><option>Pengimportan</option>
+                        </select>
+                    </div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">No Repot Polis</label><input type="text" name="NO_REPOT_POLIS" placeholder="PAROI/000020/26" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">No Kes IP</label><input type="text" name="NO_KES_IP" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Tarikh Kejadian</label><input type="date" name="TARIKH_KEJADIAN" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Masa Kejadian</label><input type="time" name="MASA_KEJADIAN" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Lokasi Kejadian</label><input type="text" name="LOKASI_KEJADIAN" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Perihal Kesalahan</label><input type="text" name="KESALAHAN" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Undang-Undang / Akta</label><input type="text" name="UNDANG_UNDANG" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Jenis Rampasan Utama</label><input type="text" name="JENIS_RAMPASAN" class="input-3d w-full mt-2"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: RAMPASAN STANDARD -->
+            <div class="section-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s; border-left: 8px solid #10b981;">
+                <h2 class="text-green-900 font-black mb-6 flex items-center gap-3 text-lg uppercase">
+                    <i class="fas fa-boxes text-2xl text-green-600"></i> Rampasan Haiwan & Produk Standard
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">LEMBU</label><input type="number" name="LEMBU" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">KERBAU</label><input type="number" name="KERBAU" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">KAMBING</label><input type="number" name="KAMBING" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">BEBIRI</label><input type="number" name="BEBIRI" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">BABI</label><input type="number" name="BABI" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">AYAM</label><input type="number" name="AYAM" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">KARKAS LEMBU</label><input type="number" name="KARKAS_LEMBU" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">KARKAS KERBAU</label><input type="number" name="KARKAS_KERBAU" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">KARKAS AYAM</label><input type="number" name="KARKAS_AYAM" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black">SB AYAM</label><input type="number" name="PRODUK_SEJUK_BEKU_AYAM" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black text-blue-600">ANJING</label><input type="number" name="ANJING" value="0" class="input-3d w-full mt-1"></div>
+                    <div class="bg-white/50 p-2 rounded-xl"><label class="text-[10px] font-black text-blue-600">HAMSTER</label><input type="number" name="HAMSTER" value="0" class="input-3d w-full mt-1"></div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: DINAMIK -->
+            <div class="section-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s; border-left: 8px solid #a855f7;">
+                <h2 class="text-purple-900 font-black mb-6 flex items-center gap-3 text-lg uppercase">
+                    <i class="fas fa-plus-circle text-2xl text-purple-600"></i> Rampasan Tambahan & Lain-Lain
+                </h2>
+                <div id="dynamicContainer"></div>
+                <button type="button" onclick="addRow()" class="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-purple-700 transition flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Tambah Item Baru
+                </button>
+                <div class="mt-6">
+                    <label class="text-xs font-black text-gray-500 uppercase">Rumusan Automatik Rampasan Lain</label>
+                    <textarea id="lainLainDisplay" class="input-3d w-full mt-2 h-20 bg-gray-50" readonly placeholder="Item tambahan akan dijana di sini..."></textarea>
+                    <input type="hidden" name="RAMPASAN_LAIN_LAIN" id="hiddenLainLain">
+                </div>
+            </div>
+
+            <!-- SECTION 5: LOGISTIK & NILAI -->
+            <div class="section-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s; border-left: 8px solid #ef4444;">
+                <h2 class="text-red-900 font-black mb-6 flex items-center gap-3 text-lg uppercase">
+                    <i class="fas fa-truck-loading text-2xl text-red-600"></i> Logistik & Anggaran Nilai (RM)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Bil Kenderaan</label><input type="number" name="JUMLAH_RAMPASAN_KENDERAAN" value="0" class="input-3d w-full mt-2"></div>
+                    <div><label class="text-xs font-black text-gray-500 uppercase">Bil Kontena</label><input type="number" name="JUMLAH_RAMPASAN_PENGANGKUT_KONTENA" value="0" class="input-3d w-full mt-2"></div>
+                    <div class="md:col-span-2"></div>
+
+                    <div><label class="text-xs font-black text-red-700 uppercase">Nilai Haiwan (RM)</label><input type="number" step="0.01" name="ANGGARAN_NILAI_EKOR_KG" value="0" class="input-3d w-full mt-2 calc font-bold"></div>
+                    <div><label class="text-xs font-black text-red-700 uppercase">Nilai Kenderaan (RM)</label><input type="number" step="0.01" name="ANGGARAN_NILAI_KENDERAAN" value="0" class="input-3d w-full mt-2 calc font-bold"></div>
+                    <div><label class="text-xs font-black text-red-700 uppercase">Nilai Kontena (RM)</label><input type="number" step="0.01" name="ANGGARAN_NILAI_PENGANGKUT_KONTENA" value="0" class="input-3d w-full mt-2 calc font-bold"></div>
+                    <div><label class="text-xs font-black text-red-700 uppercase">Nilai Lain (RM)</label><input type="number" step="0.01" name="ANGGARAN_NILAI_LAIN_LAIN" value="0" class="input-3d w-full mt-2 calc font-bold"></div>
+
+                    <div class="md:col-span-4 bg-gradient-to-r from-yellow-100 to-yellow-200 p-8 rounded-3xl border-4 border-yellow-400">
+                        <p class="text-center font-black text-blue-900 text-3xl md:text-5xl tracking-tighter">TOTAL: <span id="total_ui">RM 0.00</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div><label class="text-xs font-black text-gray-500 uppercase">Status Serahan</label><input type="text" name="KES_SERAHAN" class="input-3d w-full mt-2"></div>
+                <div><label class="text-xs font-black text-gray-500 uppercase">Catatan Tambahan</label><textarea name="CATATAN" class="input-3d w-full mt-2 h-14"></textarea></div>
+            </div>
+
+            <button type="submit" class="btn-submit w-full group">
+                <span class="flex items-center justify-center gap-4">
+                    <i class="fas fa-shield-check text-3xl group-hover:animate-bounce"></i>
+                    HANTAR KE HQ 📈
+                </span>
+            </button>
+        </form>
+    </div>
+
+    <footer class="text-center py-10 text-blue-900/60 text-sm font-bold uppercase tracking-widest">
+        &copy; 2026 Bahagian Penguat Kuasa Veterinar | Kementerian Pertanian dan Keterjaminan Makanan
+    </footer>
+
+    <script>
+        function addRow() {
+            const container = document.getElementById('dynamicContainer');
+            const rowId = Date.now();
+            const div = document.createElement('div');
+            div.className = 'dynamic-row grid grid-cols-1 md:grid-cols-4 gap-4 items-end animate__animated animate__fadeInDown';
+            div.id = rowId;
+            div.innerHTML = `
+                <div class="md:col-span-2">
+                    <label class="text-[10px] font-black uppercase">Item Rampasan</label>
+                    <input type="text" placeholder="Cth: Rusa / Burung Unta" class="input-3d w-full dyn-name" oninput="updateLainLain()">
+                </div>
+                <div>
+                    <label class="text-[10px] font-black uppercase">Unit</label>
+                    <select class="input-3d w-full dyn-unit" onchange="updateLainLain()">
+                        <option>EKOR</option><option>KG</option><option>TIN</option>
+                    </select>
+                </div>
+                <div class="flex gap-2">
+                    <input type="number" value="0" class="input-3d w-full dyn-qty" oninput="updateLainLain()">
+                    <button type="button" onclick="document.getElementById('${rowId}').remove(); updateLainLain();" class="bg-red-500 text-white p-3 rounded-xl hover:bg-red-700 transition shadow-lg">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function updateLainLain() {
+            let items = [];
+            document.querySelectorAll('.dynamic-row').forEach(row => {
+                const name = row.querySelector('.dyn-name').value;
+                const unit = row.querySelector('.dyn-unit').value;
+                const qty = row.querySelector('.dyn-qty').value;
+                if(name) items.push(`${name} (${qty} ${unit})`);
+            });
+            const str = items.join(', ');
+            document.getElementById('hiddenLainLain').value = str;
+            document.getElementById('lainLainDisplay').value = str;
+        }
+
+        document.querySelectorAll('.calc').forEach(el => {
+            el.addEventListener('input', () => {
+                let total = 0;
+                document.querySelectorAll('.calc').forEach(i => total += parseFloat(i.value || 0));
+                document.getElementById('total_ui').innerText = 'RM ' + total.toLocaleString(undefined, {minimumFractionDigits: 2});
+            });
+        });
+
+        document.getElementById('vetSystemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin text-3xl"></i> SEDANG MEMPROSES...';
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('http://localhost:5000/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if(res.ok) {
+                    alert('✅ 👨‍✈️REKOD BERJAYA DIHANTAR KE HQ!\nTeruskan Usaha Anda 🥰👨‍✈️.');
+                    location.reload();
+                } else {
+                    const err = await res.json();
+                    alert('❌ RALAT SISTEM: ' + err.message);
+                }
+            } catch (err) {
+                alert('❌ RALAT SAMBUNGAN: Sila pastikan Bridge Python (bridge.py) aktif di pelayan lokal.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="flex items-center justify-center gap-4"><i class="fas fa-shield-check text-3xl"></i> TAMBAH DATA ITEM/STOK</span>';
+            }
+        });
+    </script>
+</body>
+</html>
