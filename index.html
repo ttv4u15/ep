@@ -3,6 +3,44 @@
   System: e-Penguat Kuasa Veterinar
   Feature: Mesh Background, Glass UI, Pixar-style 3D Icons
 -->
+code
+JavaScript
+// Fungsi untuk suara ucapan selamat datang
+function playGreeting() {
+    // Semak jika browser menyokong SpeechSynthesis
+    if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = "Selamat Datang ke E-Penguatkuasa Veterinar Malaysia";
+        msg.lang = 'ms-MY'; // Set bahasa ke Bahasa Melayu
+        msg.rate = 0.9;      // Kelajuan suara (0.1 hingga 10)
+        msg.pitch = 1.1;     // Nada suara (lebih tinggi sedikit untuk suara perempuan)
+
+        // Cari suara perempuan dalam sistem
+        window.speechSynthesis.onvoiceschanged = () => {
+            const voices = window.speechSynthesis.getVoices();
+            // Cuba cari suara Bahasa Melayu (ms-MY) atau Indonesia (id-ID) sebagai alternatif
+            const malayVoice = voices.find(voice => voice.lang === 'ms-MY' || voice.name.includes('Malaysian') || voice.lang === 'id-ID');
+            
+            if (malayVoice) {
+                msg.voice = malayVoice;
+            }
+            window.speechSynthesis.speak(msg);
+        };
+
+        // Jalankan terus jika senarai suara sudah sedia
+        window.speechSynthesis.speak(msg);
+    }
+}
+
+// Jalankan fungsi sebaik sahaja tetingkap dibuka
+window.addEventListener('load', playGreeting);
+
+// Nota: Browser moden kadang-kadang sekat suara automatik. 
+// Jika suara tidak keluar, ia akan dimulakan sebaik sahaja pengguna klik mana-mana bahagian di web.
+window.addEventListener('click', () => {
+    if (window.speechSynthesis.speaking) return; // Jangan ulang jika sedang bercakap
+    // playGreeting(); // Aktifkan ini jika mahu suara keluar selepas klik pertama
+}, { once: true });
 <!DOCTYPE html>
 <html lang="ms">
 <head>
